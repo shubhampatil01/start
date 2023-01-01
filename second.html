@@ -28,13 +28,23 @@
           <input type="submit" class="btn btn-dark" value="Submit" />
         </form>
         <h2 class="title">Items</h2>
-        <ul id="items" class="font-weight-bold">
+        <ul id="items" class="list-group">
           <li class="list-group-item">Item 1</li>
           <li class="list-group-item">Item 2</li>
-          <li class="list-group-item list-group-item-success">Item 3</li>
+          <li class="list-group-item">Item 3</li>
           <li class="list-group-item">Item 4</li>
         </ul>
       </div>
     </div>
+    <script>
+      var lastItem = document.querySelector(".list-group-item:last-child");
+      lastItem.style.color = "red";
+      var secondItem = document.querySelector(".list-group-item:nth-child(2)");
+      secondItem.style.color = "green";
+      var odd = document.querySelectorAll("li:nth-child(odd)");
+      for (var i = 0; i < odd.length; i++) {
+        odd[i].style.backgroundColor = "green";
+      }
+    </script>
   </body>
 </html>
