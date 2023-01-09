@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>JS For Beginners</title>
+  </head>
+  <body>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      ul li {
+        padding: 5px;
+        background: #f4f4f4;
+        margin: 5px 0;
+      }
+
+      header {
+        background: #f4f4f4;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .container {
+        margin: auto;
+        width: 500px;
+        overflow: auto;
+        padding: 3rem 2rem;
+      }
+
+      #my-form {
+        padding: 2rem;
+        background: #f4f4f4;
+      }
+
+      #my-form label {
+        display: block;
+      }
+
+      #my-form input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      #my-form input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      #my-form select[type="select"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      .btn {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        border: 0;
+        background: #333;
+        color: #fff;
+        border-radius: 5px;
+        margin: 5px 0;
+      }
+
+      .btn:hover {
+        background: #444;
+      }
+
+      .bg-dark {
+        background: #333;
+        color: #fff;
+      }
+
+      .error {
+        background: orangered;
+        color: #fff;
+        padding: 5px;
+        margin: 5px;
+      }
+    </style>
+    <header>
+      <h1>Expense Tracker</h1>
+    </header>
+
+    <section class="container">
+      <form id="my-form">
+        <h1>Add Expense</h1>
+        <div class="msg"></div>
+        <div>
+          <label for="name">Expense Amount:</label>
+          <input type="number" id="name" />
+        </div>
+        <div>
+          <label for="email">Enter Description:</label>
+          <input type="text" id="email" />
+        </div>
+        <div>
+          <label for="category">Category: </label>
+          <select type="select" id="options">
+            <option selected>Select from below</option>
+            <option value="Movie">Movie</option>
+            <option value="Petrol">Petrol</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <input class="btn" type="submit" value="Submit" />
+      </form>
+
+      <ul id="users"></ul>
+
+      <!-- <ul class="items">
+        <li class="item">Item 1</li>
+        <input class="btn" type="submit" value="Delete">
+        <li class="item">Item 2</li>
+        <li class="item">Item 3</li>
+      </ul> -->
+    </section>
+
+    <script>
+      const myForm = document.querySelector("#my-form");
+      var nameInput = document.querySelector("#name");
+      var emailInput = document.querySelector("#email");
+      const catInput = document.querySelector("#options");
+      const msg = document.querySelector(".msg");
+      const userList = document.querySelector("#users");
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      let editButton = document.createElement("button");
+      editButton.textContent = "Edit";
+      myForm.addEventListener("submit", onSubmit);
+      function onSubmit(e) {
+        e.preventDefault();
+        const li = document.createElement("li");
+        li.appendChild(
+          document.createTextNode(
+            `Expense: ${nameInput.value} Description: ${emailInput.value} Category: ${catInput.value}`,
+            li.appendChild(deleteButton),
+            li.appendChild(editButton)
+          )
+        );
+        localStorage.setItem("expense", (nameInput.value, emailInput.value));
+        userList.appendChild(li);
+        nameInput.value = "";
+        emailInput.value = "";
+        deleteButton.addEventListener("click", function () {
+          userList.removeChild(li);
+          localStorage.removeItem("expense");
+        });
+        editButton.addEventListener("click", function () {
+          localStorage.getItem.userList;
+        });
+      }
+    </script>
+  </body>
+</html>
