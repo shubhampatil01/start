@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <header><h1></h1></header>
+    <section>
+      <form action="#" method="post">
+        <div class="msg"></div>
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="newitem" />
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="text" id="newitem" />
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+      <ul id="todolist"></ul>
+    </section>
+
+    <script>
+      (function () {
+        var todo = document.querySelector("#todolist"),
+          form = document.querySelector("form"),
+          field = document.querySelector("#newitem");
+
+        form.addEventListener(
+          "submit",
+          function (ev) {
+            var text = field.value;
+            if (text !== "") {
+              todo.innerHTML +=
+                "<li>" +
+                text +
+                ' <button onclick="Delete(this);">Delete</button> </li>';
+              field.value = "";
+              //field.focus();
+            }
+            ev.preventDefault();
+          },
+          false
+        );
+      })();
+      function Delete(currentEl) {
+        currentEl.parentNode.parentNode.removeChild(currentEl.parentNode);
+      }
+    </script>
+  </body>
+</html>
