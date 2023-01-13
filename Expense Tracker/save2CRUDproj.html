@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+    />
+    <title>CRUD CRUD Event Project</title>
+  </head>
+  <body>
+    <h1 class="text-center">Welcome To my Project</h1>
+    <br />
+    <form onsubmit="saveToLocalStorage(event)" class="row g-3">
+      <div class="col-md-6">
+        <label>Choose Expense Amount</label>
+        <input type="number" id="username" name="username" />
+      </div>
+
+      <div class="col-md-6">
+        <label>Choose Description</label>
+        <input type="text" id="email" name="emailId" required />
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Category</label>
+        <select name="pnonenumber" id="phonenumber">
+          <option>...</option>
+          <option>Fuel</option>
+          <option>Movie</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+    <ul id="listOfUsers"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"></script>
+    <script>
+      function saveToLocalStorage(event) {
+        event.preventDefault();
+        const name = event.target.username.value;
+        const email = event.target.emailId.value;
+        const phonenumber = event.target.phonenumber.value;
+        const obj = {
+          name,
+          email,
+          phonenumber,
+        };
+        axios
+          .post(
+            "https://crudcrud.com/api/fd04e1e66b0949748f336f0451ef5872/appointmentData",
+            obj
+          )
+          .then((response) => {
+            showUserOnScreen(response.data);
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      window.addEventListener("DOMContentLoaded", () => {
+        axios
+          .get(
+            "https://crudcrud.com/api/fd04e1e66b0949748f336f0451ef5872/appointmentData"
+          )
+          .then((response) => {
+            console.log(response);
+            for (var i = 0; i < response.data.length; i++) {
+              showUserOnScreen(response.data[i]);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+      function showUserOnScreen(user) {
+        document.getElementById("email").value = "";
+        document.getElementById("username").value = "";
+        document.getElementById("phonenumber").value = "";
+        if (localStorage.getItem(user.email) !== null) {
+          removeUserFromScreen(user.email);
+        }
+        const parentNode = document.getElementById("listOfUsers");
+        const childHTML = `<br><li id= ${user._id}> ${user.name} - ${user.email} - ${user.phonenumber}
+            <button class="btn btn-primary" onClick=deleteUser('${user._id}')> Delete User </button>
+            <button class="btn btn-primary" onClick=editUserDetails('${user.email}','${user.name}','${user.phonenumber}','${user._id}')> Edit User </button> </li>`;
+        parentNode.innerHTML = parentNode.innerHTML + childHTML;
+      }
+      function editUserDetails(emailId, name, phonenumber, userId) {
+        document.getElementById("email").value = emailId;
+        document.getElementById("name").value = name;
+        document.getElementById("phonenumber").value = phonenumber;
+
+        deleteUser(userId);
+      }
+      function deleteUser(userId) {
+        axios
+          .delete(
+            `https://crudcrud.com/api/fd04e1e66b0949748f336f0451ef5872/appointmentData/${userId}`
+          )
+          .then((response) => removeUserFromScreen(userId))
+          .catch(console.error(err));
+      }
+      function removeUserFromScreen(userId) {
+        const parentNode = document.getElementById("listOfUsers");
+        const childNodeToBeDeleted = document.getElementById(userId);
+        if (childNodeToBeDeleted) {
+          parentNode.removeChild(childNodeToBeDeleted);
+        }
+      }
+    </script>
+  </body>
+</html>
